@@ -1,5 +1,14 @@
 <ion-content>
   <ion-row>
+    <ion-col>
+      <div class="dice">
+        <img [src]="'../../assets/img/dice/'+numberDice+'.png'" alt="" srcset="">
+      </div>
+      <ion-button (click)="roleDice()">
+        roll
+      </ion-button>
+      <!-- <div class="ludu-board"></div> -->
+    </ion-col>
     <ion-col class="ion-margin ion-padding">
       <div class="ludu-board">
         <div [class]="box?.color" *ngFor="let box of boxArr;let i = index" [id]="'cellId'+box?.cellNumber"
@@ -7,6 +16,11 @@
           <!-- {{box?.cellNumber}} -->
           <!-- <h1>{{box?.isLadder ? 'L':''}}</h1>-->
           <p>{{box?.cellNumber}}</p>
+          <!-- players -->
+          <img src="../../assets/img/players/1.png" alt="" class="green-player" id="green-player"
+            *ngIf="players.green.currPosition == box?.cellNumber">
+          <img src="../../assets/img/players/2.png" alt="" class="red-player" id="red-player"
+            *ngIf="players.red.currPosition == box?.cellNumber">
         </div>
         <!-- ladder -->
         <img src="./../../assets/img/ladders/ladder_red_big.png" alt="ladder_red_big" srcset="" id="ladder_red_big">
@@ -19,10 +33,9 @@
           id="yellow_snake_small">
         <img src="./../../assets/img/snakes/green_snake_big.png" alt="green_snake_big" srcset="" id="green_snake_big">
         <img src="./../../assets/img/snakes/violate_snake.png" alt="violate_snake" srcset="" id="violate_snake">
+        <!-- player -->
+
       </div>
-    </ion-col>
-    <ion-col>
-      <!-- <div class="ludu-board"></div> -->
     </ion-col>
   </ion-row>
 

@@ -7,6 +7,17 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, AfterViewInit {
+  numberDice: number = 1;
+  players = {
+    green: {
+      currPosition: 1,
+    },
+    red: {
+      currPosition: 1,
+    },
+  };
+  playerTurn: number = 1;
+  currPosition: number = 16;
   colors = [
     'colorYellowGreen',
     'colorGreenYellow ',
@@ -53,10 +64,10 @@ export class HomePage implements OnInit, AfterViewInit {
     console.log('array', this.boxArr);
   }
 
-  private rendomNumber(): number {
+  private rendomNumber(minNumber: number = 0, maxNumber: number = 5): number {
     let j;
-    let min = 0;
-    let max = 5;
+    let min = minNumber;
+    let max = maxNumber;
     let i = Math.floor(Math.random() * (max - min)) + min;
     if (j === i) {
       i = this.rendomNumber();
@@ -99,4 +110,39 @@ export class HomePage implements OnInit, AfterViewInit {
       ...existCell[0],
     };
   }
+
+  /**
+   * roleDice
+   */
+  private roleDice(): void {
+    let count = 0;
+    let interval = setInterval(() => {
+      if (count != 12) {
+        this.numberDice = this.rendomNumber(1, 6);
+        count++;
+      } else {
+        clearInterval(interval);
+        this.setPlayerPosition(this.playerTurn);
+      }
+    }, 100);
+  }
+
+  private setPlayerPosition(player: number): void {
+    let playerActive = player == 1 ? 'green' : 'red';
+    if (this.players[playerActive].currPosition + this.numberDice == 36) {
+      alert('You win');
+    } else if (this.players[playerActive].currPosition + this.numberDice > 36) {
+      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+      alert('Ooops!! try another round');
+    } else if (this.players[playerActive].currPosition < 36) {
+      this.players[playerActive].currPosition =
+        this.players[playerActive].currPosition + this.numberDice;
+      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+    } else {
+      // code
+      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+    }
+  }
+
+  private isSnakeOrLadder() {}
 }
