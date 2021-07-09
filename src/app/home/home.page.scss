@@ -1,27 +1,94 @@
-#container {
-  text-align: center;
+:root {
+  --color-one: #cddc39;
+  --color1: #8bc34a;
+  --color2: #ffeb3b;
+  --color3: #ff5722;
+  --color4: #2196f3;
+  --color5: #ffc107;
+}
+.colorYellowGreen {
+  background: #cddc39;
+}
 
+.ludu-board {
+  margin: 10px auto;
+  height: 600px;
+  width: 600px;
+  border: 3px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+#ladder_red_big {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 27px;
+  left: 177px;
+  transform: rotate(332deg);
+  height: 250px;
 }
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+#ladder_brown_big {
+  position: absolute;
+  right: 130px;
+  bottom: 201px;
+  transform: rotate(40deg);
+  height: 284px;
+  opacity: 1;
 }
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+#ladder_green_small {
+  position: absolute;
+  top: 120px;
+  transform: rotate(45deg);
+  left: 71px;
+  height: 159px;
 }
-
-#container a {
-  text-decoration: none;
+#yellow_snake_small {
+  position: absolute;
+  height: 240px;
+  left: 320px;
+  top: 30px;
+}
+#green_snake_big {
+  position: absolute;
+  height: 281px;
+  top: 267px;
+  transform: rotate(47deg);
+  right: 134px;
+}
+#violate_snake {
+  position: absolute;
+  top: 214px;
+  left: 60px;
+  height: 363px;
+  transform: rotateY(209deg);
+  opacity: 1;
+}
+.single-box,
+.colorYellowGreen,
+.colorGreenYellow,
+.colorYellow,
+.colorRed,
+.colorBlue,
+.colorOrange {
+  height: 99px;
+  width: 99px;
+  background: green;
+  border: 3px solid black;
+  color: white;
+  font-size: 32px;
+  font-weight: bolder;
+}
+.colorGreenYellow {
+  background: #8bc34a;
+}
+.colorYellow {
+  background: #ffeb3b;
+}
+.colorRed {
+  background: #ff5722;
+}
+.colorBlue {
+  background: #2196f3;
+}
+.colorOrange {
+  background: #ffc107;
 }
