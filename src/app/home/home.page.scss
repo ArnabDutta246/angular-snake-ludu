@@ -11,9 +11,11 @@
 }
 
 .ludu-board {
-  margin: 10px auto;
+  margin: 0px auto;
   height: 600px;
   width: 600px;
+  // height: 100%;
+  // width: 100%;
   border: 3px solid black;
   display: flex;
   flex-wrap: wrap;
@@ -71,6 +73,8 @@
 .colorOrange {
   height: 99px;
   width: 99px;
+  // height: 16.5%;
+  // width: 16.5%;
   background: green;
   border: 3px solid black;
   color: white;
@@ -107,3 +111,39 @@
   left: -3px;
   z-index: 2;
 }
+.statistic_box {
+  margin: 30px auto;
+}
+.statistic_image {
+  height: 100px;
+}
+.statistic_image img {
+  height: 50px;
+}
+
+// .alertMsg {
+//   position: absolute;
+//   height: 100px;
+//   width: 60%;
+//   background: whitesmoke;
+//   opacity: 0.9;
+//   top: 35%;
+//   left: 25%;
+//   z-index: 3;
+//   color: black;
+//   display: none;
+//   justify-content: center;
+//   align-items: center;
+//   animation-duration: 0.9s;
+//   animation-name: showIn;
+// }
+// @keyframes showIn {
+//   from {
+//     opacity: 0.9;
+//     display: block;
+//   }
+//   to {
+//     opacity: 0;
+//     display: none;
+//   }
+// }

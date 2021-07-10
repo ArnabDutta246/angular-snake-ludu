@@ -11,3 +11,10 @@ export interface BothSidePosition {
   head: number;
   tail: number;
 }
+
+export interface IsSnakeOrLadderCell {
+  isSnake?: boolean;
+  isLadder?: boolean;
+  snakeAddress?: BothSidePosition;
+  ladderAddress?: BothSidePosition;
+}

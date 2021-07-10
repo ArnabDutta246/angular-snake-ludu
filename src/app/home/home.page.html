@@ -1,12 +1,15 @@
 <ion-content>
+  <br><br>
   <ion-row>
-    <ion-col size="12" size-lg="4" size-md="5" class="ion-text-center">
-      <ion-card>
-        <ion-toolbar color="dark">
+    <ion-col size="12" size-lg="1"></ion-col>
+    <ion-col size="12" size-lg="4" class="ion-padding">
+      <app-current-log [historyData]="history"></app-current-log>
+      <ion-card class="ion-text-center ion-padding ion-margin statistic_box">
+        <ion-toolbar color="light">
           <ion-row>
             <ion-col>
-              <p>Player G</p>
-              <ion-badge color="success" *ngIf="playerTurn ==1">Active</ion-badge>
+              <h5>GREEN</h5>
+              <ion-badge color="success" *ngIf="playerTurn ==1">T</ion-badge>
             </ion-col>
             <ion-col>
               <div class="dice">
@@ -14,32 +17,79 @@
               </div>
             </ion-col>
             <ion-col>
-              <p>Player R</p>
-              <ion-badge color="success" *ngIf="playerTurn ==2">Active</ion-badge>
+              <h5>RED</h5>
+              <ion-badge color="success" *ngIf="playerTurn ==2">T</ion-badge>
             </ion-col>
           </ion-row>
         </ion-toolbar>
         <ion-item>
           <ion-label slot="start">Open State</ion-label>
-          <ion-buttons>
-            <ion-button fill="clear">
-              <ion-icon name=""></ion-icon>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="showStateBox = !showStateBox">
+              <ion-icon name="chevron-down-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-item>
+        <div *ngIf="showStateBox">
+          <!-- snake attack -->
+          <ion-toolbar class="ion-margin-bottom">
+            <ion-row>
+              <ion-col>
+                <p>
+                  {{players.green.snakeBiteCount}}
+                </p>
+                <p>Times</p>
+              </ion-col>
+              <ion-col class="statistic_image">
+                <img src="../../assets/img/snakes/yellow_snake_small.png" alt="" srcset="">
+                <ion-text color="dark">
+                  <p>Bite</p>
+                </ion-text>
+              </ion-col>
+              <ion-col>
+                <p>
+                  {{players.red.snakeBiteCount}}
+                </p>
+                <p>Times</p>
+              </ion-col>
+            </ion-row>
+          </ion-toolbar>
+          <!-- ladder user -->
+          <ion-toolbar class="ion-margin-bottom" color="light">
+            <ion-row>
+              <ion-col>
+                <p>
+                  {{players.green.ladderJumpCount}}
+                </p>
+                <p>Times</p>
+              </ion-col>
+              <ion-col class="statistic_image">
+                <img src="../../assets/img/ladders/ladder_red_big.png" alt="" srcset="">
+                <ion-text color="dark">
+                  <p>Jump</p>
+                </ion-text>
+              </ion-col>
+              <ion-col>
+                <p>
+                  {{players.red.ladderJumpCount}}
+                </p>
+                <p>Times</p>
+              </ion-col>
+            </ion-row>
+          </ion-toolbar>
+        </div>
+        <ion-button (click)="roleDice()" fill="solid" size="block" color="danger" *ngIf="!reset">
+          roll
+        </ion-button>
+        <ion-button (click)="resetMatch()" fill="solid" size="block" color="warning" *ngIf="reset">
+          New Game
+        </ion-button>
       </ion-card>
-
-      <ion-button (click)="roleDice()">
-        roll
-      </ion-button>
-      <!-- <div class="ludu-board"></div> -->
     </ion-col>
-    <ion-col class="ion-margin ion-padding">
+    <ion-col class="">
       <div class="ludu-board">
         <div [class]="box?.color" *ngFor="let box of boxArr;let i = index" [id]="'cellId'+box?.cellNumber"
           class="ion-text-center">
-          <!-- {{box?.cellNumber}} -->
-          <!-- <h1>{{box?.isLadder ? 'L':''}}</h1>-->
           <p>{{box?.cellNumber}}</p>
           <!-- players -->
           <img src="../../assets/img/players/1.png" alt="" class="green-player" id="green-player"
@@ -62,6 +112,7 @@
 
       </div>
     </ion-col>
+    <ion-col size="12" size-lg="1"></ion-col>
   </ion-row>
 
 </ion-content>

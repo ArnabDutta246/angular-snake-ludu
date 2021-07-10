@@ -1,6 +1,11 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
-import { BothSidePosition, SingleCell } from '../interface/cell';
+import {
+  BothSidePosition,
+  IsSnakeOrLadderCell,
+  SingleCell,
+} from '../interface/cell';
 import { DOCUMENT } from '@angular/common';
+import { Player, Players } from '../interface/players';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -8,16 +13,20 @@ import { DOCUMENT } from '@angular/common';
 })
 export class HomePage implements OnInit, AfterViewInit {
   numberDice: number = 1;
-  players = {
+  currDiceNumber: number = 1;
+  players: Players = {
     green: {
       currPosition: 1,
+      snakeBiteCount: 0,
+      ladderJumpCount: 0,
     },
     red: {
       currPosition: 1,
+      snakeBiteCount: 0,
+      ladderJumpCount: 0,
     },
   };
   playerTurn: number = 1;
-  currPosition: number = 16;
   colors = [
     'colorYellowGreen',
     'colorGreenYellow ',
@@ -30,7 +39,7 @@ export class HomePage implements OnInit, AfterViewInit {
   snakeData: BothSidePosition[] = [
     { head: 34, tail: 22 },
     { head: 13, tail: 10 },
-    { tail: 21, head: 6 },
+    { head: 21, tail: 6 },
   ];
 
   ladderData: BothSidePosition[] = [
@@ -38,6 +47,15 @@ export class HomePage implements OnInit, AfterViewInit {
     { tail: 15, head: 25 },
     { tail: 19, head: 29 },
   ];
+  showStateBox: boolean = true;
+  history = {
+    player: 'green',
+    alertMsg: 'First turn',
+    currPos: 1,
+    prevPos: 1,
+  };
+
+  reset: boolean = false;
   constructor(@Inject(DOCUMENT) document) {}
   ngOnInit() {
     this.createMainArr();
@@ -61,7 +79,8 @@ export class HomePage implements OnInit, AfterViewInit {
       }
     }
     this.boxArr = this.boxArr.reverse();
-    console.log('array', this.boxArr);
+    // console.log('all cells table');
+    // console.table(this.boxArr);
   }
 
   private rendomNumber(minNumber: number = 0, maxNumber: number = 5): number {
@@ -93,21 +112,21 @@ export class HomePage implements OnInit, AfterViewInit {
     this.boxArr.push(cellData);
   }
 
-  private ladderDataCheck(cell: number) {
+  private ladderDataCheck(cell: number): IsSnakeOrLadderCell {
     let existCell = this.ladderData.filter((ladder) => ladder.tail == cell);
     //console.log(cell, existCell);
     return {
       isLadder: existCell.length > 0 ? true : false,
-      ...existCell[0],
+      ladderAddress: existCell.length > 0 ? existCell[0] : null,
     };
   }
 
-  private snakeDataCheck(cell: number) {
-    let existCell = this.snakeData.filter((ladder) => ladder.head == cell);
+  private snakeDataCheck(cell: number): IsSnakeOrLadderCell {
+    let existCell = this.snakeData.filter((snake) => snake.head == cell);
     //console.log(cell, existCell);
     return {
       isSnake: existCell.length > 0 ? true : false,
-      ...existCell[0],
+      snakeAddress: existCell.length > 0 ? existCell[0] : null,
     };
   }
 
@@ -122,6 +141,7 @@ export class HomePage implements OnInit, AfterViewInit {
         count++;
       } else {
         clearInterval(interval);
+        this.currDiceNumber = this.numberDice;
         this.setPlayerPosition(this.playerTurn);
       }
     }, 100);
@@ -130,19 +150,105 @@ export class HomePage implements OnInit, AfterViewInit {
   private setPlayerPosition(player: number): void {
     let playerActive = player == 1 ? 'green' : 'red';
     if (this.players[playerActive].currPosition + this.numberDice == 36) {
-      alert('You win');
+      this.setHistory(
+        'You win',
+        this.players[playerActive].currPosition,
+        this.players[playerActive].currPosition
+      );
+      this.players[playerActive].currPosition =
+        this.players[playerActive].currPosition + this.numberDice;
+      this.reset = true;
     } else if (this.players[playerActive].currPosition + this.numberDice > 36) {
       this.playerTurn = this.playerTurn == 1 ? 2 : 1;
-      alert('Ooops!! try another round');
+
+      this.setHistory(
+        'Ooops!! need ' + (36 - this.players[playerActive].currPosition),
+        this.players[playerActive].currPosition,
+        this.players[playerActive].currPosition
+      );
     } else if (this.players[playerActive].currPosition < 36) {
       this.players[playerActive].currPosition =
         this.players[playerActive].currPosition + this.numberDice;
       this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+
+      this.isSnakeOrLadder(this.players[playerActive], 'snake');
+      this.isSnakeOrLadder(this.players[playerActive], 'ladder');
     } else {
       // code
       this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+      this.isSnakeOrLadder(this.players[playerActive], 'snake');
+      this.isSnakeOrLadder(this.players[playerActive], 'ladder');
     }
   }
 
-  private isSnakeOrLadder() {}
+  /**
+   * check:
+   * this player current position has
+   * snake/ladder . If so it's next position will
+   * @param playerActive
+   */
+  private isSnakeOrLadder(playerActive: Player, category: string = 'ladder') {
+    let findCell = this.boxArr.filter(
+      (cell) => cell.cellNumber == playerActive.currPosition
+    )[0];
+
+    console.log(findCell);
+    if (category == 'snake' && findCell.isSnake) {
+      playerActive.currPosition = findCell.snakeAddress.tail;
+      playerActive.snakeBiteCount += 1;
+      this.setHistory(
+        'Oooops!!! Snake bite',
+        playerActive.currPosition,
+        findCell.snakeAddress.head
+      );
+    } else if (category == 'ladder' && findCell.isLadder) {
+      playerActive.currPosition = findCell.ladderAddress.head;
+      playerActive.ladderJumpCount += 1;
+      this.setHistory(
+        'Coool!!! Ladder Jump',
+        playerActive.currPosition,
+        findCell.ladderAddress.tail
+      );
+    } else {
+      this.setHistory(
+        'Progress',
+        playerActive.currPosition,
+        Math.abs(playerActive.currPosition - this.currDiceNumber)
+      );
+    }
+  }
+
+  private resetMatch(): void {
+    this.reset = !this.reset;
+    this.players = {
+      green: {
+        currPosition: 1,
+        snakeBiteCount: 0,
+        ladderJumpCount: 0,
+      },
+      red: {
+        currPosition: 1,
+        snakeBiteCount: 0,
+        ladderJumpCount: 0,
+      },
+    };
+    this.playerTurn = 1;
+    this.numberDice = 1;
+    this.history = {
+      player: 'green',
+      alertMsg: 'First turn',
+      currPos: 1,
+      prevPos: 1,
+    };
+  }
+
+  private setHistory(msg: string, cPos: number, pPos: number): void {
+    this.history = {
+      player: this.playerTurn == 1 ? 'red' : 'green',
+      alertMsg: msg,
+      currPos: cPos,
+      prevPos: pPos,
+    };
+    console.log('Now history', this.history);
+  }
 }

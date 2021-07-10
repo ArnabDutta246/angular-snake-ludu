@@ -1,0 +1,24 @@
+<ion-toolbar color="light">
+  <ion-row>
+    <ion-col size="2" class="ion-text-center">
+      <ion-badge [color]="history.player == 'green'?'success':'danger'">{{history.player}}</ion-badge>
+    </ion-col>
+    <ion-col>
+      <div class="ion-text-center">
+        <ion-text>
+          <span>{{history.alertMsg}}</span>
+        </ion-text>
+      </div>
+    </ion-col>
+    <ion-col size="4" class="ion-text-center">
+      <span>
+        {{history.prevPos}}
+      </span>
+      <ion-icon
+        [name]="history.currPos > history.prevPos || history.currPos == history.prevPos? 'caret-up-outline':'caret-down-outline'"
+        [color]="history.currPos > history.prevPos || history.currPos == history.prevPos?'success':'danger'">
+      </ion-icon>
+      <span>{{history.currPos}}</span>
+    </ion-col>
+  </ion-row>
+</ion-toolbar>
