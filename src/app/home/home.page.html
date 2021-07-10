@@ -1,9 +1,34 @@
 <ion-content>
   <ion-row>
-    <ion-col>
-      <div class="dice">
-        <img [src]="'../../assets/img/dice/'+numberDice+'.png'" alt="" srcset="">
-      </div>
+    <ion-col size="12" size-lg="4" size-md="5" class="ion-text-center">
+      <ion-card>
+        <ion-toolbar color="dark">
+          <ion-row>
+            <ion-col>
+              <p>Player G</p>
+              <ion-badge color="success" *ngIf="playerTurn ==1">Active</ion-badge>
+            </ion-col>
+            <ion-col>
+              <div class="dice">
+                <img [src]="'../../assets/img/dice/'+numberDice+'.png'" alt="" srcset="">
+              </div>
+            </ion-col>
+            <ion-col>
+              <p>Player R</p>
+              <ion-badge color="success" *ngIf="playerTurn ==2">Active</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-toolbar>
+        <ion-item>
+          <ion-label slot="start">Open State</ion-label>
+          <ion-buttons>
+            <ion-button fill="clear">
+              <ion-icon name=""></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-card>
+
       <ion-button (click)="roleDice()">
         roll
       </ion-button>
