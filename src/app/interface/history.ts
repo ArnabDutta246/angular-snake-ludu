@@ -1,4 +1,4 @@
-export interface History {
+export interface HistoryInfo {
   player: string;
   alertMsg: string;
   currPos: number;

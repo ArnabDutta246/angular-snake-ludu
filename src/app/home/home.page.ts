@@ -6,6 +6,7 @@ import {
 } from '../interface/cell';
 import { DOCUMENT } from '@angular/common';
 import { Player, Players } from '../interface/players';
+import { HistoryInfo } from '../interface/history';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -48,7 +49,7 @@ export class HomePage implements OnInit, AfterViewInit {
     { tail: 19, head: 29 },
   ];
   showStateBox: boolean = true;
-  history = {
+  history: HistoryInfo = {
     player: 'green',
     alertMsg: 'First turn',
     currPos: 1,
@@ -133,7 +134,7 @@ export class HomePage implements OnInit, AfterViewInit {
   /**
    * roleDice
    */
-  private roleDice(): void {
+  public roleDice(): void {
     let count = 0;
     let interval = setInterval(() => {
       if (count != 12) {
@@ -218,7 +219,7 @@ export class HomePage implements OnInit, AfterViewInit {
     }
   }
 
-  private resetMatch(): void {
+  public resetMatch(): void {
     this.reset = !this.reset;
     this.players = {
       green: {

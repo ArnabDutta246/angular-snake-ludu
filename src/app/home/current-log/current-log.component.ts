@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { HistoryInfo } from 'src/app/interface/history';
 
 @Component({
   selector: 'app-current-log',
@@ -6,8 +7,8 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
   styleUrls: ['./current-log.component.scss'],
 })
 export class CurrentLogComponent implements OnInit, OnChanges {
-  @Input() historyData: History = null;
-  history: History;
+  @Input() historyData: HistoryInfo = null;
+  history: HistoryInfo;
   constructor() {}
 
   ngOnInit() {
