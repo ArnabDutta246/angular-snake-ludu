@@ -15,3 +15,19 @@ Simple snake ladder ludu using angular typescript . Computer Vs User version try
 ### Live demo: https://snake-ladder-ludu.netlify.app/
 
 <img align="center" alt="snake-ladder-ludu"  src="https://github.com/ArnabDutta246/angular-snake-ludu/blob/main/src/assets/img/screenShot/screenShot.JPG" />
+
+
+
+### Use this code
+
+first clone or download this project then run
+```
+npm install
+
+```
+
+after intalling all package then run
+```
+ionic serve
+
+```
