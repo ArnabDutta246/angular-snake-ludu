@@ -137,7 +137,7 @@ export class HomePage implements OnInit, AfterViewInit {
   public roleDice(): void {
     let count = 0;
     let interval = setInterval(() => {
-      if (count != 12) {
+      if (count != 6) {
         this.numberDice = this.rendomNumber(1, 6);
         count++;
       } else {
@@ -152,7 +152,7 @@ export class HomePage implements OnInit, AfterViewInit {
     let playerActive = player == 1 ? 'green' : 'red';
     if (this.players[playerActive].currPosition + this.numberDice == 36) {
       this.setHistory(
-        'You win',
+        `Congress!! ${playerActive} win`,
         this.players[playerActive].currPosition,
         this.players[playerActive].currPosition
       );
@@ -160,25 +160,23 @@ export class HomePage implements OnInit, AfterViewInit {
         this.players[playerActive].currPosition + this.numberDice;
       this.reset = true;
     } else if (this.players[playerActive].currPosition + this.numberDice > 36) {
-      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
-
       this.setHistory(
         'Ooops!! need ' + (36 - this.players[playerActive].currPosition),
         this.players[playerActive].currPosition,
         this.players[playerActive].currPosition
       );
+      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
     } else if (this.players[playerActive].currPosition < 36) {
       this.players[playerActive].currPosition =
         this.players[playerActive].currPosition + this.numberDice;
-      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
 
-      this.isSnakeOrLadder(this.players[playerActive], 'snake');
-      this.isSnakeOrLadder(this.players[playerActive], 'ladder');
+      this.isSnakeOrLadder(this.players[playerActive]);
+      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
     } else {
       // code
-      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
-      this.isSnakeOrLadder(this.players[playerActive], 'snake');
-      this.isSnakeOrLadder(this.players[playerActive], 'ladder');
+      // this.isSnakeOrLadder(this.players[playerActive], 'snake');
+      // this.isSnakeOrLadder(this.players[playerActive], 'ladder');
+      // this.playerTurn = this.playerTurn == 1 ? 2 : 1;
     }
   }
 
@@ -188,13 +186,13 @@ export class HomePage implements OnInit, AfterViewInit {
    * snake/ladder . If so it's next position will
    * @param playerActive
    */
-  private isSnakeOrLadder(playerActive: Player, category: string = 'ladder') {
+  private isSnakeOrLadder(playerActive: Player) {
     let findCell = this.boxArr.filter(
       (cell) => cell.cellNumber == playerActive.currPosition
     )[0];
 
     console.log(findCell);
-    if (category == 'snake' && findCell.isSnake) {
+    if (findCell.isSnake) {
       playerActive.currPosition = findCell.snakeAddress.tail;
       playerActive.snakeBiteCount += 1;
       this.setHistory(
@@ -202,7 +200,7 @@ export class HomePage implements OnInit, AfterViewInit {
         playerActive.currPosition,
         findCell.snakeAddress.head
       );
-    } else if (category == 'ladder' && findCell.isLadder) {
+    } else if (findCell.isLadder) {
       playerActive.currPosition = findCell.ladderAddress.head;
       playerActive.ladderJumpCount += 1;
       this.setHistory(
@@ -211,6 +209,7 @@ export class HomePage implements OnInit, AfterViewInit {
         findCell.ladderAddress.tail
       );
     } else {
+      // code
       this.setHistory(
         'Progress',
         playerActive.currPosition,
@@ -245,7 +244,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
   private setHistory(msg: string, cPos: number, pPos: number): void {
     this.history = {
-      player: this.playerTurn == 1 ? 'red' : 'green',
+      player: this.playerTurn == 1 ? 'green' : 'red',
       alertMsg: msg,
       currPos: cPos,
       prevPos: pPos,
