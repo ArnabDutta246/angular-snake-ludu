@@ -13,7 +13,7 @@
             </ion-col>
             <ion-col>
               <div class="dice">
-                <img [src]="'../../assets/img/dice/'+numberDice+'.png'" alt="" srcset="">
+                <img [src]="'./../../assets/img/dice/'+numberDice+'.png'" alt="" srcset="">
               </div>
             </ion-col>
             <ion-col>
@@ -41,7 +41,7 @@
                 <p>Times</p>
               </ion-col>
               <ion-col class="statistic_image">
-                <img src="../../assets/img/snakes/yellow_snake_small.png" alt="" srcset="">
+                <img src="./../../assets/img/snakes/yellow_snake_small.png" alt="" srcset="">
                 <ion-text color="dark">
                   <p>Bite</p>
                 </ion-text>
@@ -64,7 +64,7 @@
                 <p>Times</p>
               </ion-col>
               <ion-col class="statistic_image">
-                <img src="../../assets/img/ladders/ladder_red_big.png" alt="" srcset="">
+                <img src="./../../assets/img/ladders/ladder_red_big.png" alt="" srcset="">
                 <ion-text color="dark">
                   <p>Jump</p>
                 </ion-text>
@@ -93,9 +93,9 @@
           class="ion-text-center">
           <p>{{box?.cellNumber}}</p>
           <!-- players -->
-          <img src="../../assets/img/players/1.png" alt="" class="green-player" id="green-player"
+          <img src="./../../assets/img/players/1.png" alt="" class="green-player" id="green-player"
             *ngIf="players.green.currPosition == box?.cellNumber">
-          <img src="../../assets/img/players/2.png" alt="" class="red-player" id="red-player"
+          <img src="./../../assets/img/players/2.png" alt="" class="red-player" id="red-player"
             *ngIf="players.red.currPosition == box?.cellNumber">
         </div>
         <!-- ladder -->
