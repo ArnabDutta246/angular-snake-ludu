@@ -78,8 +78,9 @@
             </ion-row>
           </ion-toolbar>
         </div>
-        <ion-button (click)="roleDice()" fill="solid" size="block" color="danger" *ngIf="!reset">
-          roll
+        <ion-button (click)="roleDice()" fill="solid" size="block" color="danger" *ngIf="!reset"
+          [disabled]="computerTurn">
+          Throw Dice
         </ion-button>
         <ion-button (click)="resetMatch()" fill="solid" size="block" color="warning" *ngIf="reset">
           New Game

@@ -13,6 +13,7 @@ import { HistoryInfo } from '../interface/history';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, AfterViewInit {
+  computerTurn: boolean = false;
   numberDice: number = 1;
   currDiceNumber: number = 1;
   players: Players = {
@@ -178,6 +179,19 @@ export class HomePage implements OnInit, AfterViewInit {
       // this.isSnakeOrLadder(this.players[playerActive], 'ladder');
       // this.playerTurn = this.playerTurn == 1 ? 2 : 1;
     }
+    this.computerTurnCall();
+  }
+  // computer turn
+  private computerTurnCall() {
+    setTimeout(() => {
+      console.log('now player', this.playerTurn);
+      if (this.playerTurn == 2) {
+        this.computerTurn = true;
+        this.roleDice();
+      } else {
+        this.computerTurn = false;
+      }
+    }, 2000);
   }
 
   /**
