@@ -150,6 +150,7 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   private setPlayerPosition(player: number): void {
+    let gameEnd: boolean = false;
     let playerActive = player == 1 ? 'green' : 'red';
     if (this.players[playerActive].currPosition + this.numberDice == 36) {
       this.setHistory(
@@ -160,6 +161,8 @@ export class HomePage implements OnInit, AfterViewInit {
       this.players[playerActive].currPosition =
         this.players[playerActive].currPosition + this.numberDice;
       this.reset = true;
+      this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+      gameEnd = true;
     } else if (this.players[playerActive].currPosition + this.numberDice > 36) {
       this.setHistory(
         'Ooops!! need ' + (36 - this.players[playerActive].currPosition),
@@ -179,7 +182,7 @@ export class HomePage implements OnInit, AfterViewInit {
       // this.isSnakeOrLadder(this.players[playerActive], 'ladder');
       // this.playerTurn = this.playerTurn == 1 ? 2 : 1;
     }
-    this.computerTurnCall();
+    if (!gameEnd) this.computerTurnCall();
   }
   // computer turn
   private computerTurnCall() {
@@ -254,6 +257,7 @@ export class HomePage implements OnInit, AfterViewInit {
       currPos: 1,
       prevPos: 1,
     };
+    this.computerTurn = false;
   }
 
   private setHistory(msg: string, cPos: number, pPos: number): void {
