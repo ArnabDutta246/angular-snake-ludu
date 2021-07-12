@@ -12,7 +12,7 @@
 
 Simple snake ladder ludu using angular typescript . Computer Vs User version try to build first. Fun project which already host in netlify I drop the link bellow.
 
-### Live demo: https://snake-ladder-ludu.netlify.app/
+### Live demo: https://arnabdutta246.github.io/snake-ladder-ludu/
 
 <img align="center" alt="snake-ladder-ludu"  src="https://github.com/ArnabDutta246/angular-snake-ludu/blob/main/src/assets/img/screenShot/screenShot.JPG" />
 
